@@ -16,7 +16,7 @@ namespace InjectionViewer
         private const int MIN_X_AXIS = 0;
         private const int MAX_Y_AXIS = 100;
         private const int MAX_Y2_AXIS = 1500;
-        private const int MAX_X_AXIS = 100;
+        private const int MAX_X_AXIS = 21;
         #endregion
 
 
@@ -94,7 +94,7 @@ namespace InjectionViewer
         {
             timeBegin.Value = DateTime.Now;
             timeEnd.Value = DateTime.Now;
-            timeCount.Value = 21;
+            timeCount.Value = MAX_X_AXIS;
             pBegin.Text = string.Empty;
             pMiddle.Text = string.Empty;
             pEnd.Text = string.Empty;
@@ -180,7 +180,8 @@ namespace InjectionViewer
                         {
                             StrokeThickness = 2,
                             PathEffect = new DashEffect(new float[] { 3, 3 })
-                        }
+                        },
+                        
 
                     },
                 };
@@ -271,7 +272,7 @@ namespace InjectionViewer
                         TextSize=10,
                         Labels=GetInterimDates(timeBegin.Value,timeEnd.Value,(int)timeCount.Value),
                         MinLimit=MIN_X_AXIS,
-                        MaxLimit=MAX_X_AXIS,
+                        MaxLimit=(int)timeCount.Value,
                         LabelsPaint = new SolidColorPaint(_blackColor),
                         ShowSeparatorLines = true,
                         SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray)

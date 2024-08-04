@@ -32,6 +32,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             timeEnd = new DateTimePicker();
             pGroup = new GroupBox();
+            pEndLabel = new Label();
+            pMiddleLabel = new Label();
+            pBeginLabel = new Label();
             pEnd = new TextBox();
             pMiddle = new TextBox();
             pBegin = new TextBox();
@@ -43,6 +46,10 @@
             timeGroup = new GroupBox();
             timeCountLabel = new Label();
             genInfoGroup = new GroupBox();
+            label4 = new Label();
+            label3 = new Label();
+            label1 = new Label();
+            volumeLabel = new Label();
             specificWeight = new TextBox();
             volumeInjection = new TextBox();
             volume = new TextBox();
@@ -61,13 +68,6 @@
             chart = new LiveChartsCore.SkiaSharpView.WinForms.CartesianChart();
             chartGroup = new Panel();
             validateProvider = new ErrorProvider(components);
-            volumeLabel = new Label();
-            label1 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            pBeginLabel = new Label();
-            pMiddleLabel = new Label();
-            pEndLabel = new Label();
             pGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)timeCount).BeginInit();
             timeGroup.SuspendLayout();
@@ -105,6 +105,39 @@
             pGroup.TabIndex = 13;
             pGroup.TabStop = false;
             pGroup.Text = "Давление";
+            // 
+            // pEndLabel
+            // 
+            pEndLabel.AutoSize = true;
+            pEndLabel.CausesValidation = false;
+            pEndLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            pEndLabel.Location = new Point(6, 94);
+            pEndLabel.Name = "pEndLabel";
+            pEndLabel.Size = new Size(46, 21);
+            pEndLabel.TabIndex = 42;
+            pEndLabel.Text = "Pкон";
+            // 
+            // pMiddleLabel
+            // 
+            pMiddleLabel.AutoSize = true;
+            pMiddleLabel.CausesValidation = false;
+            pMiddleLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            pMiddleLabel.Location = new Point(6, 59);
+            pMiddleLabel.Name = "pMiddleLabel";
+            pMiddleLabel.Size = new Size(37, 21);
+            pMiddleLabel.TabIndex = 41;
+            pMiddleLabel.Text = "Pср";
+            // 
+            // pBeginLabel
+            // 
+            pBeginLabel.AutoSize = true;
+            pBeginLabel.CausesValidation = false;
+            pBeginLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            pBeginLabel.Location = new Point(6, 28);
+            pBeginLabel.Name = "pBeginLabel";
+            pBeginLabel.Size = new Size(45, 21);
+            pBeginLabel.TabIndex = 40;
+            pBeginLabel.Text = "Pнач";
             // 
             // pEnd
             // 
@@ -186,6 +219,7 @@
             // timeCount
             // 
             timeCount.Location = new Point(258, 22);
+            timeCount.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             timeCount.Name = "timeCount";
             timeCount.Size = new Size(45, 25);
             timeCount.TabIndex = 29;
@@ -237,6 +271,50 @@
             genInfoGroup.TabIndex = 33;
             genInfoGroup.TabStop = false;
             genInfoGroup.Text = "Общая информация";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.CausesValidation = false;
+            label4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label4.Location = new Point(6, 114);
+            label4.Name = "label4";
+            label4.Size = new Size(113, 21);
+            label4.TabIndex = 39;
+            label4.Text = "Удельный вес";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.CausesValidation = false;
+            label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label3.Location = new Point(6, 87);
+            label3.Name = "label3";
+            label3.Size = new Size(125, 21);
+            label3.TabIndex = 38;
+            label3.Text = "Наименование";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.CausesValidation = false;
+            label1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label1.Location = new Point(6, 59);
+            label1.Name = "label1";
+            label1.Size = new Size(124, 21);
+            label1.TabIndex = 37;
+            label1.Text = "Объём закачки";
+            // 
+            // volumeLabel
+            // 
+            volumeLabel.AutoSize = true;
+            volumeLabel.CausesValidation = false;
+            volumeLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            volumeLabel.Location = new Point(6, 30);
+            volumeLabel.Name = "volumeLabel";
+            volumeLabel.Size = new Size(62, 21);
+            volumeLabel.TabIndex = 36;
+            volumeLabel.Text = "Объём";
             // 
             // specificWeight
             // 
@@ -409,83 +487,6 @@
             validateProvider.BlinkRate = 0;
             validateProvider.BlinkStyle = ErrorBlinkStyle.NeverBlink;
             validateProvider.ContainerControl = this;
-            // 
-            // volumeLabel
-            // 
-            volumeLabel.AutoSize = true;
-            volumeLabel.CausesValidation = false;
-            volumeLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            volumeLabel.Location = new Point(6, 30);
-            volumeLabel.Name = "volumeLabel";
-            volumeLabel.Size = new Size(62, 21);
-            volumeLabel.TabIndex = 36;
-            volumeLabel.Text = "Объём";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.CausesValidation = false;
-            label1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label1.Location = new Point(6, 59);
-            label1.Name = "label1";
-            label1.Size = new Size(124, 21);
-            label1.TabIndex = 37;
-            label1.Text = "Объём закачки";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.CausesValidation = false;
-            label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label3.Location = new Point(6, 87);
-            label3.Name = "label3";
-            label3.Size = new Size(125, 21);
-            label3.TabIndex = 38;
-            label3.Text = "Наименование";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.CausesValidation = false;
-            label4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label4.Location = new Point(6, 114);
-            label4.Name = "label4";
-            label4.Size = new Size(113, 21);
-            label4.TabIndex = 39;
-            label4.Text = "Удельный вес";
-            // 
-            // pBeginLabel
-            // 
-            pBeginLabel.AutoSize = true;
-            pBeginLabel.CausesValidation = false;
-            pBeginLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            pBeginLabel.Location = new Point(6, 28);
-            pBeginLabel.Name = "pBeginLabel";
-            pBeginLabel.Size = new Size(45, 21);
-            pBeginLabel.TabIndex = 40;
-            pBeginLabel.Text = "Pнач";
-            // 
-            // pMiddleLabel
-            // 
-            pMiddleLabel.AutoSize = true;
-            pMiddleLabel.CausesValidation = false;
-            pMiddleLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            pMiddleLabel.Location = new Point(6, 59);
-            pMiddleLabel.Name = "pMiddleLabel";
-            pMiddleLabel.Size = new Size(37, 21);
-            pMiddleLabel.TabIndex = 41;
-            pMiddleLabel.Text = "Pср";
-            // 
-            // pEndLabel
-            // 
-            pEndLabel.AutoSize = true;
-            pEndLabel.CausesValidation = false;
-            pEndLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            pEndLabel.Location = new Point(6, 94);
-            pEndLabel.Name = "pEndLabel";
-            pEndLabel.Size = new Size(46, 21);
-            pEndLabel.TabIndex = 42;
-            pEndLabel.Text = "Pкон";
             // 
             // MainForm
             // 
