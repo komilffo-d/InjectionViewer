@@ -80,12 +80,12 @@
             // 
             // timeEnd
             // 
-            timeEnd.CustomFormat = "";
-            timeEnd.Format = DateTimePickerFormat.Time;
-            timeEnd.Location = new Point(90, 55);
+            timeEnd.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            timeEnd.CustomFormat = "HH:mm:ss dd.MM.yyyy";
+            timeEnd.Format = DateTimePickerFormat.Custom;
+            timeEnd.Location = new Point(78, 58);
             timeEnd.Name = "timeEnd";
-            timeEnd.ShowUpDown = true;
-            timeEnd.Size = new Size(92, 25);
+            timeEnd.Size = new Size(177, 25);
             timeEnd.TabIndex = 2;
             timeEnd.Validating += timeEnd_Validating;
             // 
@@ -174,13 +174,13 @@
             // 
             // timeBegin
             // 
-            timeBegin.CustomFormat = "";
-            timeBegin.Format = DateTimePickerFormat.Time;
+            timeBegin.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            timeBegin.CustomFormat = "HH:mm:ss dd.MM.yyyy";
+            timeBegin.Format = DateTimePickerFormat.Custom;
             timeBegin.ImeMode = ImeMode.NoControl;
-            timeBegin.Location = new Point(90, 17);
+            timeBegin.Location = new Point(78, 20);
             timeBegin.Name = "timeBegin";
-            timeBegin.ShowUpDown = true;
-            timeBegin.Size = new Size(92, 25);
+            timeBegin.Size = new Size(177, 25);
             timeBegin.TabIndex = 14;
             timeBegin.Validating += timeBegin_Validating;
             // 
@@ -189,7 +189,7 @@
             timeBeginLabel.AutoSize = true;
             timeBeginLabel.CausesValidation = false;
             timeBeginLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            timeBeginLabel.Location = new Point(18, 21);
+            timeBeginLabel.Location = new Point(6, 21);
             timeBeginLabel.Name = "timeBeginLabel";
             timeBeginLabel.Size = new Size(66, 21);
             timeBeginLabel.TabIndex = 15;
@@ -200,7 +200,7 @@
             timeEndLabel.AutoSize = true;
             timeEndLabel.CausesValidation = false;
             timeEndLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            timeEndLabel.Location = new Point(18, 55);
+            timeEndLabel.Location = new Point(6, 58);
             timeEndLabel.Name = "timeEndLabel";
             timeEndLabel.Size = new Size(58, 21);
             timeEndLabel.TabIndex = 16;
@@ -218,10 +218,11 @@
             // 
             // timeCount
             // 
-            timeCount.Location = new Point(258, 22);
+            timeCount.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            timeCount.Location = new Point(77, 94);
             timeCount.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             timeCount.Name = "timeCount";
-            timeCount.Size = new Size(45, 25);
+            timeCount.Size = new Size(178, 25);
             timeCount.TabIndex = 29;
             timeCount.Value = new decimal(new int[] { 21, 0, 0, 0 });
             // 
@@ -247,7 +248,7 @@
             timeCountLabel.AutoSize = true;
             timeCountLabel.CausesValidation = false;
             timeCountLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            timeCountLabel.Location = new Point(188, 20);
+            timeCountLabel.Location = new Point(7, 93);
             timeCountLabel.Name = "timeCountLabel";
             timeCountLabel.Size = new Size(64, 21);
             timeCountLabel.TabIndex = 30;

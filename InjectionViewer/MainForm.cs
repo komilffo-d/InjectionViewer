@@ -239,7 +239,8 @@ namespace InjectionViewer
             {
                 Values = new ObservableCollection<double>(data),
                 Stroke = new SolidColorPaint(color, 2),
-                GeometryStroke = new SolidColorPaint(color, 2),
+                GeometryStroke = null,
+                GeometryFill = null,
                 Fill = null,
                 ScalesYAt = yAxis
             };
