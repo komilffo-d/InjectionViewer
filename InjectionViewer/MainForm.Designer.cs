@@ -61,6 +61,13 @@
             chart = new LiveChartsCore.SkiaSharpView.WinForms.CartesianChart();
             chartGroup = new Panel();
             validateProvider = new ErrorProvider(components);
+            volumeLabel = new Label();
+            label1 = new Label();
+            label3 = new Label();
+            label4 = new Label();
+            pBeginLabel = new Label();
+            pMiddleLabel = new Label();
+            pEndLabel = new Label();
             pGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)timeCount).BeginInit();
             timeGroup.SuspendLayout();
@@ -85,6 +92,9 @@
             // pGroup
             // 
             pGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pGroup.Controls.Add(pEndLabel);
+            pGroup.Controls.Add(pMiddleLabel);
+            pGroup.Controls.Add(pBeginLabel);
             pGroup.Controls.Add(pEnd);
             pGroup.Controls.Add(pMiddle);
             pGroup.Controls.Add(pBegin);
@@ -99,10 +109,10 @@
             // pEnd
             // 
             pEnd.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pEnd.Location = new Point(15, 94);
+            pEnd.Location = new Point(58, 94);
             pEnd.Name = "pEnd";
             pEnd.PlaceholderText = "Pкон";
-            pEnd.Size = new Size(270, 25);
+            pEnd.Size = new Size(227, 25);
             pEnd.TabIndex = 39;
             pEnd.KeyPress += DeleteSpace_KeyPress;
             pEnd.Validating += pEnd_Validating;
@@ -110,10 +120,10 @@
             // pMiddle
             // 
             pMiddle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pMiddle.Location = new Point(15, 58);
+            pMiddle.Location = new Point(57, 58);
             pMiddle.Name = "pMiddle";
             pMiddle.PlaceholderText = "Pср";
-            pMiddle.Size = new Size(270, 25);
+            pMiddle.Size = new Size(228, 25);
             pMiddle.TabIndex = 38;
             pMiddle.KeyPress += DeleteSpace_KeyPress;
             pMiddle.Validating += pMiddle_Validating;
@@ -121,10 +131,10 @@
             // pBegin
             // 
             pBegin.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pBegin.Location = new Point(15, 24);
+            pBegin.Location = new Point(57, 24);
             pBegin.Name = "pBegin";
             pBegin.PlaceholderText = "Pнач";
-            pBegin.Size = new Size(270, 25);
+            pBegin.Size = new Size(228, 25);
             pBegin.TabIndex = 37;
             pBegin.KeyPress += DeleteSpace_KeyPress;
             pBegin.Validating += pBegin_Validating;
@@ -166,10 +176,10 @@
             // name
             // 
             name.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            name.Location = new Point(9, 83);
+            name.Location = new Point(140, 85);
             name.Name = "name";
             name.PlaceholderText = "Наименование";
-            name.Size = new Size(291, 25);
+            name.Size = new Size(160, 25);
             name.TabIndex = 18;
             name.Validating += name_Validating;
             // 
@@ -212,6 +222,10 @@
             // genInfoGroup
             // 
             genInfoGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            genInfoGroup.Controls.Add(label4);
+            genInfoGroup.Controls.Add(label3);
+            genInfoGroup.Controls.Add(label1);
+            genInfoGroup.Controls.Add(volumeLabel);
             genInfoGroup.Controls.Add(specificWeight);
             genInfoGroup.Controls.Add(volumeInjection);
             genInfoGroup.Controls.Add(volume);
@@ -227,10 +241,10 @@
             // specificWeight
             // 
             specificWeight.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            specificWeight.Location = new Point(9, 114);
+            specificWeight.Location = new Point(140, 114);
             specificWeight.Name = "specificWeight";
             specificWeight.PlaceholderText = "Удельный вес";
-            specificWeight.Size = new Size(291, 25);
+            specificWeight.Size = new Size(160, 25);
             specificWeight.TabIndex = 35;
             specificWeight.KeyPress += DeleteSpace_KeyPress;
             specificWeight.Validating += specificWeight_Validating;
@@ -238,10 +252,10 @@
             // volumeInjection
             // 
             volumeInjection.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            volumeInjection.Location = new Point(9, 55);
+            volumeInjection.Location = new Point(140, 55);
             volumeInjection.Name = "volumeInjection";
             volumeInjection.PlaceholderText = "Объём закачки";
-            volumeInjection.Size = new Size(291, 25);
+            volumeInjection.Size = new Size(160, 25);
             volumeInjection.TabIndex = 34;
             volumeInjection.KeyPress += DeleteSpace_KeyPress;
             volumeInjection.Validating += volumeInjection_Validating;
@@ -249,10 +263,10 @@
             // volume
             // 
             volume.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            volume.Location = new Point(9, 26);
+            volume.Location = new Point(140, 26);
             volume.Name = "volume";
             volume.PlaceholderText = "Объём";
-            volume.Size = new Size(291, 25);
+            volume.Size = new Size(160, 25);
             volume.TabIndex = 33;
             volume.KeyPress += DeleteSpace_KeyPress;
             volume.Validating += volume_Validating;
@@ -396,6 +410,83 @@
             validateProvider.BlinkStyle = ErrorBlinkStyle.NeverBlink;
             validateProvider.ContainerControl = this;
             // 
+            // volumeLabel
+            // 
+            volumeLabel.AutoSize = true;
+            volumeLabel.CausesValidation = false;
+            volumeLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            volumeLabel.Location = new Point(6, 30);
+            volumeLabel.Name = "volumeLabel";
+            volumeLabel.Size = new Size(62, 21);
+            volumeLabel.TabIndex = 36;
+            volumeLabel.Text = "Объём";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.CausesValidation = false;
+            label1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label1.Location = new Point(6, 59);
+            label1.Name = "label1";
+            label1.Size = new Size(124, 21);
+            label1.TabIndex = 37;
+            label1.Text = "Объём закачки";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.CausesValidation = false;
+            label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label3.Location = new Point(6, 87);
+            label3.Name = "label3";
+            label3.Size = new Size(125, 21);
+            label3.TabIndex = 38;
+            label3.Text = "Наименование";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.CausesValidation = false;
+            label4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label4.Location = new Point(6, 114);
+            label4.Name = "label4";
+            label4.Size = new Size(113, 21);
+            label4.TabIndex = 39;
+            label4.Text = "Удельный вес";
+            // 
+            // pBeginLabel
+            // 
+            pBeginLabel.AutoSize = true;
+            pBeginLabel.CausesValidation = false;
+            pBeginLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            pBeginLabel.Location = new Point(6, 28);
+            pBeginLabel.Name = "pBeginLabel";
+            pBeginLabel.Size = new Size(45, 21);
+            pBeginLabel.TabIndex = 40;
+            pBeginLabel.Text = "Pнач";
+            // 
+            // pMiddleLabel
+            // 
+            pMiddleLabel.AutoSize = true;
+            pMiddleLabel.CausesValidation = false;
+            pMiddleLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            pMiddleLabel.Location = new Point(6, 59);
+            pMiddleLabel.Name = "pMiddleLabel";
+            pMiddleLabel.Size = new Size(37, 21);
+            pMiddleLabel.TabIndex = 41;
+            pMiddleLabel.Text = "Pср";
+            // 
+            // pEndLabel
+            // 
+            pEndLabel.AutoSize = true;
+            pEndLabel.CausesValidation = false;
+            pEndLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            pEndLabel.Location = new Point(6, 94);
+            pEndLabel.Name = "pEndLabel";
+            pEndLabel.Size = new Size(46, 21);
+            pEndLabel.TabIndex = 42;
+            pEndLabel.Text = "Pкон";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -460,5 +551,12 @@
         private TextBox pEnd;
         private TextBox pMiddle;
         private TextBox pBegin;
+        private Label pEndLabel;
+        private Label pMiddleLabel;
+        private Label pBeginLabel;
+        private Label label4;
+        private Label label3;
+        private Label label1;
+        private Label volumeLabel;
     }
 }
