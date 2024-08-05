@@ -1,4 +1,5 @@
 using LiveChartsCore;
+using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
@@ -181,11 +182,13 @@ namespace InjectionViewer
                             StrokeThickness = 2,
                             PathEffect = new DashEffect(new float[] { 3, 3 })
                         },
-                        
+
 
                     },
                 };
             chart.Series = new List<ISeries>();
+            chart.LegendPosition = LegendPosition.Right;
+            chart.LegendTextSize = 16;
         }
 
         private List<string> GetInterimDates(DateTime startDate, DateTime endDate, int count)
@@ -233,10 +236,11 @@ namespace InjectionViewer
             return values;
         }
 
-        private ISeries CreateSeries(IEnumerable<double> data, SKColor color, int yAxis)
+        private ISeries CreateSeries(IEnumerable<double> data, SKColor color, int yAxis, string name = "")
         {
             return new LineSeries<double>
             {
+                Name = name,
                 Values = new ObservableCollection<double>(data),
                 Stroke = new SolidColorPaint(color, 2),
                 GeometryStroke = null,
@@ -269,7 +273,7 @@ namespace InjectionViewer
                 {
                     new Axis
                     {
-                        UnitWidth=0.1,
+                        UnitWidth=0.0001,
                         TextSize=10,
                         Labels=GetInterimDates(timeBegin.Value,timeEnd.Value,(int)timeCount.Value),
                         MinLimit=MIN_X_AXIS,
@@ -286,13 +290,13 @@ namespace InjectionViewer
                 };
 
                 chart.Series = new ObservableCollection<ISeries>(){
-                    CreateSeries(Enumerable.Repeat<double>(double.Parse(specificWeight.Text),(int)timeCount.Value),_yellowColor,0),
+                    CreateSeries(Enumerable.Repeat<double>(double.Parse(specificWeight.Text),(int)timeCount.Value),_yellowColor,0, "PÍ„/Ï3"),
 
-                    CreateSeries(GetInterimDouble(double.Parse(volume.Text),(int)timeCount.Value),_greenColor,1),
+                    CreateSeries(GetInterimDouble(double.Parse(volume.Text),(int)timeCount.Value),_greenColor,1,"QÒÛÏ(Ï3)"),
 
-                    CreateSeries(Enumerable.Repeat<double>(double.Parse(volumeInjection.Text),(int)timeCount.Value),_blueColor,2),
+                    CreateSeries(Enumerable.Repeat<double>(double.Parse(volumeInjection.Text),(int)timeCount.Value),_blueColor,2,"QÏ„Ì(Î/ÒÂÍ)"),
 
-                    CreateSeries(SetNewValueInMedium(GetInterimDouble(double.Parse(pBegin.Text),(int)timeCount.Value,double.Parse(pEnd.Text)),double.Parse(pMiddle.Text)),_redColor,3),
+                    CreateSeries(SetNewValueInMedium(GetInterimDouble(double.Parse(pBegin.Text),(int)timeCount.Value,double.Parse(pEnd.Text)),double.Parse(pMiddle.Text)),_redColor,3, "PÌ‡Ô(Ãœ‡)"),
                 };
 
                 SetTextDescriptionChart();
