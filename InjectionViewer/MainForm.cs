@@ -294,7 +294,8 @@ namespace InjectionViewer
                 GeometryStroke = null,
                 GeometryFill = null,
                 Fill = null,
-                ScalesYAt = yAxis
+                ScalesYAt = yAxis,
+                LineSmoothness = 0
             };
         }
 
