@@ -1,4 +1,5 @@
 using LiveChartsCore;
+using LiveChartsCore.Drawing;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
@@ -29,6 +30,14 @@ namespace InjectionViewer
             }
         }
 
+        protected static class TypeSeries
+        {
+            public const string SPECIFIC_WEIGHT = "Pкг/м3";
+            public const string VOLUME = "Qсум(м3)";
+            public const string VOLUME_INJECTION = "Qмгн(л/сек)";
+            public const string P = "Pнап(МПа)";
+        }
+
         private StateForm _state = StateForm.PREPAIRED;
 
         protected StateForm State
@@ -42,13 +51,15 @@ namespace InjectionViewer
                 switch (value)
                 {
                     case StateForm.PREPAIRED:
-                        DisActiveMenuFormPossibility();
+                        DisActiveFormControlPossibility();
                         ReroizeTextBoxes();
                         ReroizeTextDescriptionChart();
+                        UnSubscribeEventForm();
                         InitStateChart();
                         break;
                     case StateForm.CREATEDGRAPH:
-                        ActiveMenuFormPossibility();
+                        ActiveFormControlPossibility();
+                        SubscribeEventForm();
                         break;
                 }
                 _state = value;
@@ -75,20 +86,22 @@ namespace InjectionViewer
             BMP
         }
 
-        private void ActiveMenuFormPossibility()
+        private void ActiveFormControlPossibility()
         {
             formMenuChartSaveJpg.Enabled = true;
             formMenuChartSavePng.Enabled = true;
             formMenuChartSaveBmp.Enabled = true;
             formMenuFormDropState.Enabled = true;
+            typeSeriesSelect.Enabled = true;
         }
 
-        private void DisActiveMenuFormPossibility()
+        private void DisActiveFormControlPossibility()
         {
             formMenuChartSaveJpg.Enabled = false;
             formMenuChartSavePng.Enabled = false;
             formMenuChartSaveBmp.Enabled = false;
             formMenuFormDropState.Enabled = false;
+            typeSeriesSelect.Enabled = false;
         }
 
         private void ReroizeTextBoxes()
@@ -97,12 +110,12 @@ namespace InjectionViewer
             timeEnd.Value = DateTime.Now;
             timeCount.Value = 21;
             pBegin.Text = string.Empty;
-            pMiddle.Text = string.Empty;
             pEnd.Text = string.Empty;
             volume.Text = string.Empty;
             volumeInjection.Text = string.Empty;
             name.Text = string.Empty;
             specificWeight.Text = string.Empty;
+            typeSeriesSelect.SelectedItem = null;
         }
 
         private void ReroizeTextDescriptionChart()
@@ -124,6 +137,17 @@ namespace InjectionViewer
             }
             return false;
         }
+
+        private void SubscribeEventForm()
+        {
+            chart.MouseDown += chart_MouseClick;
+        }
+
+        private void UnSubscribeEventForm()
+        {
+            chart.MouseDown -= chart_MouseClick;
+        }
+
         public MainForm()
         {
             InitializeComponent();
@@ -184,6 +208,35 @@ namespace InjectionViewer
                     },
                 };
             chart.Series = new List<ISeries>();
+        }
+
+        private void chart_MouseClick(object? sender, MouseEventArgs e)
+        {
+            string? typeSeries = typeSeriesSelect.SelectedItem?.ToString();
+
+            if (typeSeries == null)
+            {
+                MessageBox.Show("Выбранная линия является невалидной.");
+                return;
+            }
+            ISeries? series = chart.Series.ToList().FirstOrDefault(s => s.Name == typeSeries);
+
+            if (series == null)
+            {
+                MessageBox.Show("Линия с выбранным именем отсутствует на графике.");
+                return;
+            }
+
+            LvcPointD coordinatePoint = chart.ScalePixelsToData(new LvcPointD(e.X, e.Y), 0, typeSeriesSelect.SelectedIndex);
+
+            if (coordinatePoint.X < 0)
+                return;
+
+            int coordinateIntX = (int)chart.GetPointsAt(new LvcPoint(e.X, e.Y)).First().Coordinate.SecondaryValue;
+
+            var values = series.Values.Cast<double>().ToList();
+            values[coordinateIntX] = coordinatePoint.Y;
+            series.Values = values;
         }
 
         private List<string> GetInterimDates(DateTime startDate, DateTime endDate, int count)
@@ -273,14 +326,13 @@ namespace InjectionViewer
                 var volumeInjectionVar = double.Parse(volumeInjection.Text);
                 var pBeginVar = double.Parse(pBegin.Text);
                 var pEndVar = double.Parse(pEnd.Text);
-                double pMiddleVar = double.TryParse(pMiddle.Text, out double pMiddleTempVar) ? pMiddleTempVar : -1;
                 #endregion
 
                 #region [Списки значений с заданными диапазонами]
                 var timeList = GetInterimDates(timeBeginVar, timeEndVar, timeCountVar);
                 var specificWeightList = Enumerable.Repeat<double>(specificWeightVar, timeCountVar);
                 var volumeList = GetInterimDouble(volumeVar, timeCountVar);
-                var volumeInjectioList = Enumerable.Repeat<double>(volumeInjectionVar, timeCountVar);
+                var volumeInjectionList = Enumerable.Repeat<double>(volumeInjectionVar, timeCountVar);
                 var pList = GetInterimDouble(pEndVar, timeCountVar, pBeginVar);
                 #endregion
 
@@ -306,13 +358,13 @@ namespace InjectionViewer
 
 
                 chart.Series = new ObservableCollection<ISeries>(){
-                    CreateSeries(specificWeightList,_vinousColor,0, "Pкг/м3"),
+                    CreateSeries(specificWeightList,_vinousColor,0, TypeSeries.SPECIFIC_WEIGHT),
 
-                    CreateSeries(volumeList,_greenColor,1,"Qсум(м3)"),
+                    CreateSeries(volumeList,_greenColor,1,TypeSeries.VOLUME),
 
-                    CreateSeries(volumeInjectioList,_blueColor,2,"Qмгн(л/сек)"),
+                    CreateSeries(volumeInjectionList,_blueColor,2,TypeSeries.VOLUME_INJECTION),
 
-                    CreateSeries(pMiddleVar==-1 ? pList : SetNewValueInMedium(pList, pMiddleVar),_redColor,3, "Pнап(МПа)"),
+                    CreateSeries(pList,_redColor,3, TypeSeries.P),
                 };
 
                 SetTextDescriptionChart();
@@ -391,17 +443,6 @@ namespace InjectionViewer
             }
             else
                 validateProvider.SetError(pBegin, "");
-        }
-
-        private void pMiddle_Validating(object sender, CancelEventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(pMiddle.Text) && !ValidateTextToDouble(MAX_Y_AXIS, pMiddle.Text, MIN_Y_AXIS))
-            {
-                validateProvider.SetError(pMiddle, $"Требуется ввести правильное среднее значение давления! Прим. от {MIN_Y_AXIS} до {MAX_Y_AXIS}");
-                e.Cancel = true;
-            }
-            else
-                validateProvider.SetError(pMiddle, "");
         }
 
         private void pEnd_Validating(object sender, CancelEventArgs e)

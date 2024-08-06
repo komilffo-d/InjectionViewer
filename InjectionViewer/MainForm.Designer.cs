@@ -32,11 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             timeEnd = new DateTimePicker();
             pGroup = new GroupBox();
+            seriesGroup = new GroupBox();
+            typeSeriesSelect = new ComboBox();
             pEndLabel = new Label();
-            pMiddleLabel = new Label();
             pBeginLabel = new Label();
             pEnd = new TextBox();
-            pMiddle = new TextBox();
             pBegin = new TextBox();
             timeBegin = new DateTimePicker();
             timeBeginLabel = new Label();
@@ -69,6 +69,7 @@
             chartGroup = new Panel();
             validateProvider = new ErrorProvider(components);
             pGroup.SuspendLayout();
+            seriesGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)timeCount).BeginInit();
             timeGroup.SuspendLayout();
             genInfoGroup.SuspendLayout();
@@ -92,41 +93,49 @@
             // pGroup
             // 
             pGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pGroup.Controls.Add(seriesGroup);
             pGroup.Controls.Add(pEndLabel);
-            pGroup.Controls.Add(pMiddleLabel);
             pGroup.Controls.Add(pBeginLabel);
             pGroup.Controls.Add(pEnd);
-            pGroup.Controls.Add(pMiddle);
             pGroup.Controls.Add(pBegin);
             pGroup.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
             pGroup.Location = new Point(307, 3);
             pGroup.Name = "pGroup";
-            pGroup.Size = new Size(241, 145);
+            pGroup.Size = new Size(241, 153);
             pGroup.TabIndex = 13;
             pGroup.TabStop = false;
             pGroup.Text = "Давление";
+            // 
+            // seriesGroup
+            // 
+            seriesGroup.Controls.Add(typeSeriesSelect);
+            seriesGroup.Location = new Point(6, 92);
+            seriesGroup.Name = "seriesGroup";
+            seriesGroup.Size = new Size(212, 55);
+            seriesGroup.TabIndex = 43;
+            seriesGroup.TabStop = false;
+            seriesGroup.Text = "График";
+            // 
+            // typeSeriesSelect
+            // 
+            typeSeriesSelect.Enabled = false;
+            typeSeriesSelect.FormattingEnabled = true;
+            typeSeriesSelect.Items.AddRange(new object[] { "Pкг/м3", "Qсум(м3)", "Qмгн(л/сек)", "Pнап(МПа)" });
+            typeSeriesSelect.Location = new Point(22, 18);
+            typeSeriesSelect.Name = "typeSeriesSelect";
+            typeSeriesSelect.Size = new Size(167, 25);
+            typeSeriesSelect.TabIndex = 0;
             // 
             // pEndLabel
             // 
             pEndLabel.AutoSize = true;
             pEndLabel.CausesValidation = false;
             pEndLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            pEndLabel.Location = new Point(6, 94);
+            pEndLabel.Location = new Point(6, 62);
             pEndLabel.Name = "pEndLabel";
             pEndLabel.Size = new Size(46, 21);
             pEndLabel.TabIndex = 42;
             pEndLabel.Text = "Pкон";
-            // 
-            // pMiddleLabel
-            // 
-            pMiddleLabel.AutoSize = true;
-            pMiddleLabel.CausesValidation = false;
-            pMiddleLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            pMiddleLabel.Location = new Point(6, 59);
-            pMiddleLabel.Name = "pMiddleLabel";
-            pMiddleLabel.Size = new Size(37, 21);
-            pMiddleLabel.TabIndex = 41;
-            pMiddleLabel.Text = "Pср";
             // 
             // pBeginLabel
             // 
@@ -142,24 +151,13 @@
             // pEnd
             // 
             pEnd.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pEnd.Location = new Point(58, 94);
+            pEnd.Location = new Point(58, 61);
             pEnd.Name = "pEnd";
             pEnd.PlaceholderText = "Pкон(от 0 до 100) МПа";
             pEnd.Size = new Size(160, 25);
             pEnd.TabIndex = 39;
             pEnd.KeyPress += DeleteSpace_KeyPress;
             pEnd.Validating += pEnd_Validating;
-            // 
-            // pMiddle
-            // 
-            pMiddle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pMiddle.Location = new Point(57, 58);
-            pMiddle.Name = "pMiddle";
-            pMiddle.PlaceholderText = "Pср(от 0 до 100) МПа";
-            pMiddle.Size = new Size(161, 25);
-            pMiddle.TabIndex = 38;
-            pMiddle.KeyPress += DeleteSpace_KeyPress;
-            pMiddle.Validating += pMiddle_Validating;
             // 
             // pBegin
             // 
@@ -240,7 +238,7 @@
             timeGroup.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
             timeGroup.Location = new Point(3, 3);
             timeGroup.Name = "timeGroup";
-            timeGroup.Size = new Size(298, 145);
+            timeGroup.Size = new Size(298, 153);
             timeGroup.TabIndex = 32;
             timeGroup.TabStop = false;
             timeGroup.Text = "Время";
@@ -270,7 +268,7 @@
             genInfoGroup.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
             genInfoGroup.Location = new Point(554, 3);
             genInfoGroup.Name = "genInfoGroup";
-            genInfoGroup.Size = new Size(407, 145);
+            genInfoGroup.Size = new Size(407, 153);
             genInfoGroup.TabIndex = 33;
             genInfoGroup.TabStop = false;
             genInfoGroup.Text = "Общая информация";
@@ -417,9 +415,9 @@
             // gridTopPanel
             // 
             gridTopPanel.ColumnCount = 3;
-            gridTopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 31.5478725F));
+            gridTopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 31.54787F));
             gridTopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25.669548F));
-            gridTopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 42.7825775F));
+            gridTopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 42.78258F));
             gridTopPanel.Controls.Add(genInfoGroup, 2, 0);
             gridTopPanel.Controls.Add(timeGroup, 0, 0);
             gridTopPanel.Controls.Add(pGroup, 1, 0);
@@ -428,7 +426,8 @@
             gridTopPanel.Name = "gridTopPanel";
             gridTopPanel.RowCount = 1;
             gridTopPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            gridTopPanel.Size = new Size(964, 151);
+            gridTopPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            gridTopPanel.Size = new Size(964, 159);
             gridTopPanel.TabIndex = 36;
             // 
             // chartName
@@ -507,6 +506,7 @@
             FormClosing += MainForm_FormClosing;
             pGroup.ResumeLayout(false);
             pGroup.PerformLayout();
+            seriesGroup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)timeCount).EndInit();
             timeGroup.ResumeLayout(false);
             timeGroup.PerformLayout();
@@ -552,14 +552,14 @@
         private TextBox volume;
         private TextBox specificWeight;
         private TextBox pEnd;
-        private TextBox pMiddle;
         private TextBox pBegin;
         private Label pEndLabel;
-        private Label pMiddleLabel;
         private Label pBeginLabel;
         private Label label4;
         private Label label3;
         private Label label1;
         private Label volumeLabel;
+        private GroupBox seriesGroup;
+        private ComboBox typeSeriesSelect;
     }
 }
