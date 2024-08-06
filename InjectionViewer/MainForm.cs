@@ -17,7 +17,7 @@ namespace InjectionViewer
         private const int MIN_X_AXIS = 0;
         private const int MAX_Y_AXIS = 100;
         private const int MAX_Y2_AXIS = 1500;
-        private const int MAX_X_AXIS = 21;
+        private int MAX_X_AXIS = 21;
         #endregion
 
 
@@ -95,7 +95,7 @@ namespace InjectionViewer
         {
             timeBegin.Value = DateTime.Now;
             timeEnd.Value = DateTime.Now;
-            timeCount.Value = MAX_X_AXIS;
+            timeCount.Value = 21;
             pBegin.Text = string.Empty;
             pMiddle.Text = string.Empty;
             pEnd.Text = string.Empty;
@@ -138,6 +138,8 @@ namespace InjectionViewer
                 {
                     MinLimit=MIN_Y_AXIS,
                     MaxLimit=MAX_Y2_AXIS,
+                    TextSize=10,
+                    Padding=new LiveChartsCore.Drawing.Padding(0),
                     LabelsPaint = new SolidColorPaint(_yellowColor),
                     ShowSeparatorLines = false
                 },
@@ -146,17 +148,21 @@ namespace InjectionViewer
                     MinLimit=MIN_Y_AXIS,
                     MaxLimit=MAX_Y_AXIS,
                     LabelsPaint = new SolidColorPaint(_greenColor),
+                    TextSize=8,
+                    Padding=new LiveChartsCore.Drawing.Padding(10,0),
                     ShowSeparatorLines = true,
                     SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray)
                     {
                         StrokeThickness = 2,
                         PathEffect = new DashEffect(new float[] { 3, 3 })
-                    }
+                    },
                 },
                 new Axis
                 {
                     MinLimit=MIN_Y_AXIS,
                     MaxLimit=MAX_Y_AXIS,
+                    TextSize=8,
+                    Padding=new LiveChartsCore.Drawing.Padding(10,0),
                     LabelsPaint = new SolidColorPaint(_blueColor),
                     ShowSeparatorLines = false
                 },
@@ -164,6 +170,8 @@ namespace InjectionViewer
                 {
                     MinLimit=MIN_Y_AXIS,
                     MaxLimit=MAX_Y_AXIS,
+                    TextSize=8,
+                    Padding=new LiveChartsCore.Drawing.Padding(10,0),
                     LabelsPaint = new SolidColorPaint(_redColor),
                     ShowSeparatorLines = false
                 },
@@ -172,18 +180,7 @@ namespace InjectionViewer
                 {
                     new Axis
                     {
-                        TextSize=10,
-                        MinLimit=MIN_X_AXIS,
-                        MaxLimit=MAX_X_AXIS,
-                        LabelsPaint = new SolidColorPaint(_blackColor),
-                        ShowSeparatorLines = true,
-                        SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray)
-                        {
-                            StrokeThickness = 2,
-                            PathEffect = new DashEffect(new float[] { 3, 3 })
-                        },
-
-
+                        CustomSeparators=new List<double>(),
                     },
                 };
             chart.Series = new List<ISeries>();
@@ -196,9 +193,9 @@ namespace InjectionViewer
             var interimDates = new List<string>();
 
             TimeSpan interval = endDate - startDate;
-            TimeSpan step = interval / count;
+            TimeSpan step = interval / (count - 1);
 
-            for (int i = 0; i <= count; i++)
+            for (int i = 0; i < count; i++)
             {
                 DateTime intermediateDate = startDate + (step * i);
                 interimDates.Add(intermediateDate.ToString("T"));
@@ -211,9 +208,9 @@ namespace InjectionViewer
             var interimDoubles = new List<double>();
 
             double interval = endDouble - beginDouble;
-            double step = interval / count;
+            double step = interval / (count - 1);
 
-            for (int i = 0; i <= count; i++)
+            for (int i = 0; i < count; i++)
             {
                 double intermediateDouble = beginDouble + (step * i);
                 interimDoubles.Add(intermediateDouble);
@@ -227,11 +224,11 @@ namespace InjectionViewer
             if (length == 0)
                 throw new InvalidDataException("Коллекция должна иметь длину от 1 элемента.");
             else if (length == 1)
-                values.Insert(0, newValue);
+                values[0] = newValue;
             else if (length % 2 == 0)
-                values.Insert(length / 2 - 1, newValue);
+                values[length / 2 - 1] = newValue;
             else if (length % 2 == 1)
-                values.Insert(length / 2, newValue);
+                values[length / 2] = newValue;
 
             return values;
         }
@@ -254,7 +251,7 @@ namespace InjectionViewer
         {
             chartName.Text = name.Text.Trim();
             chartDate.Text = $"Дата: {timeBegin.Value.ToString("HH:mm:ss dd.MM.yyyy")} / {timeEnd.Value.ToString("HH:mm:ss dd.MM.yyyy")}";
-            chartVolume.Text = $"Суммарный объём: {volume.Text.Trim('0')} м3";
+            chartVolume.Text = $"Суммарный объём: {volume.Text.Trim()} м3";
         }
 
         private void formMenuChartCreate_Click(object sender, EventArgs e)
@@ -269,34 +266,55 @@ namespace InjectionViewer
 
             if (SetState(StateForm.CREATEDGRAPH))
             {
+                #region [Значения полей управления]
+                var timeBeginVar = timeBegin.Value;
+                var timeEndVar = timeEnd.Value;
+                var specificWeightVar = double.Parse(specificWeight.Text);
+                var timeCountVar = MAX_X_AXIS;
+                var volumeVar = double.Parse(volume.Text);
+                var volumeInjectionVar = double.Parse(volumeInjection.Text);
+                var pBeginVar = double.Parse(pBegin.Text);
+                var pEndVar = double.Parse(pEnd.Text);
+                double pMiddleVar = double.TryParse(pMiddle.Text, out double pMiddleTempVar) ? pMiddleTempVar : -1;
+                #endregion
+
+                #region [Списки значений с заданными диапазонами]
+                var timeList = GetInterimDates(timeBeginVar, timeEndVar, timeCountVar);
+                var specificWeightList = Enumerable.Repeat<double>(specificWeightVar, timeCountVar);
+                var volumeList = GetInterimDouble(volumeVar, timeCountVar);
+                var volumeInjectioList = Enumerable.Repeat<double>(volumeInjectionVar, timeCountVar);
+                var pList = GetInterimDouble(pEndVar, timeCountVar, pBeginVar);
+                #endregion
+
+
                 chart.XAxes = new List<Axis>()
                 {
                     new Axis
                     {
-                        UnitWidth=0.0001,
                         TextSize=10,
-                        Labels=GetInterimDates(timeBegin.Value,timeEnd.Value,(int)timeCount.Value),
+                        Labels=timeList,
                         MinLimit=MIN_X_AXIS,
-                        MaxLimit=(int)timeCount.Value,
+                        MaxLimit=timeCountVar - 1,
                         LabelsPaint = new SolidColorPaint(_blackColor),
                         ShowSeparatorLines = true,
                         SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray)
                         {
                             StrokeThickness = 2,
                             PathEffect = new DashEffect(new float[] { 3, 3 })
-                        }
-
+                        },
+                        Padding=new LiveChartsCore.Drawing.Padding(0,10),
                     },
                 };
 
+
                 chart.Series = new ObservableCollection<ISeries>(){
-                    CreateSeries(Enumerable.Repeat<double>(double.Parse(specificWeight.Text),(int)timeCount.Value),_yellowColor,0, "Pкг/м3"),
+                    CreateSeries(specificWeightList,_yellowColor,0, "Pкг/м3"),
 
-                    CreateSeries(GetInterimDouble(double.Parse(volume.Text),(int)timeCount.Value),_greenColor,1,"Qсум(м3)"),
+                    CreateSeries(volumeList,_greenColor,1,"Qсум(м3)"),
 
-                    CreateSeries(Enumerable.Repeat<double>(double.Parse(volumeInjection.Text),(int)timeCount.Value),_blueColor,2,"Qмгн(л/сек)"),
+                    CreateSeries(volumeInjectioList,_blueColor,2,"Qмгн(л/сек)"),
 
-                    CreateSeries(SetNewValueInMedium(GetInterimDouble(double.Parse(pBegin.Text),(int)timeCount.Value,double.Parse(pEnd.Text)),double.Parse(pMiddle.Text)),_redColor,3, "Pнап(МПа)"),
+                    CreateSeries(pMiddleVar==-1 ? pList : SetNewValueInMedium(pList, pMiddleVar),_redColor,3, "Pнап(МПа)"),
                 };
 
                 SetTextDescriptionChart();
@@ -347,7 +365,7 @@ namespace InjectionViewer
 
         private bool ValidateTextToDouble(double MaxDouble, string str, double minDouble = 0)
         {
-            if (String.IsNullOrWhiteSpace(str))
+            if (string.IsNullOrWhiteSpace(str))
                 return false;
 
             if (!double.TryParse(str, out double result))
@@ -379,7 +397,7 @@ namespace InjectionViewer
 
         private void pMiddle_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidateTextToDouble(MAX_Y_AXIS, pMiddle.Text, MIN_Y_AXIS))
+            if (!string.IsNullOrWhiteSpace(pMiddle.Text) && !ValidateTextToDouble(MAX_Y_AXIS, pMiddle.Text, MIN_Y_AXIS))
             {
                 validateProvider.SetError(pMiddle, $"Требуется ввести правильное среднее значение давления! Прим. от {MIN_Y_AXIS} до {MAX_Y_AXIS}");
                 e.Cancel = true;
@@ -434,7 +452,7 @@ namespace InjectionViewer
 
         private void name_Validating(object sender, CancelEventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(name.Text))
+            if (string.IsNullOrWhiteSpace(name.Text))
             {
                 validateProvider.SetError(name, "Требуется ввести наименование буровой установки!");
                 e.Cancel = true;
@@ -468,6 +486,13 @@ namespace InjectionViewer
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = false;
+        }
+
+        private void timeCount_ValueChanged(object sender, EventArgs e)
+        {
+            NumericUpDown control = sender as NumericUpDown;
+            if (control != null)
+                MAX_X_AXIS = (int)control.Value;
         }
     }
 }

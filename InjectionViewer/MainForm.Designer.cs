@@ -85,7 +85,7 @@
             timeEnd.Format = DateTimePickerFormat.Custom;
             timeEnd.Location = new Point(78, 58);
             timeEnd.Name = "timeEnd";
-            timeEnd.Size = new Size(177, 25);
+            timeEnd.Size = new Size(160, 25);
             timeEnd.TabIndex = 2;
             timeEnd.Validating += timeEnd_Validating;
             // 
@@ -99,9 +99,9 @@
             pGroup.Controls.Add(pMiddle);
             pGroup.Controls.Add(pBegin);
             pGroup.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            pGroup.Location = new Point(324, 3);
+            pGroup.Location = new Point(307, 3);
             pGroup.Name = "pGroup";
-            pGroup.Size = new Size(315, 145);
+            pGroup.Size = new Size(241, 145);
             pGroup.TabIndex = 13;
             pGroup.TabStop = false;
             pGroup.Text = "Давление";
@@ -144,8 +144,8 @@
             pEnd.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pEnd.Location = new Point(58, 94);
             pEnd.Name = "pEnd";
-            pEnd.PlaceholderText = "Pкон";
-            pEnd.Size = new Size(227, 25);
+            pEnd.PlaceholderText = "Pкон(от 0 до 100) МПа";
+            pEnd.Size = new Size(160, 25);
             pEnd.TabIndex = 39;
             pEnd.KeyPress += DeleteSpace_KeyPress;
             pEnd.Validating += pEnd_Validating;
@@ -155,8 +155,8 @@
             pMiddle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pMiddle.Location = new Point(57, 58);
             pMiddle.Name = "pMiddle";
-            pMiddle.PlaceholderText = "Pср";
-            pMiddle.Size = new Size(228, 25);
+            pMiddle.PlaceholderText = "Pср(от 0 до 100) МПа";
+            pMiddle.Size = new Size(161, 25);
             pMiddle.TabIndex = 38;
             pMiddle.KeyPress += DeleteSpace_KeyPress;
             pMiddle.Validating += pMiddle_Validating;
@@ -166,8 +166,8 @@
             pBegin.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pBegin.Location = new Point(57, 24);
             pBegin.Name = "pBegin";
-            pBegin.PlaceholderText = "Pнач";
-            pBegin.Size = new Size(228, 25);
+            pBegin.PlaceholderText = "Pнач(от 0 до 100) МПа";
+            pBegin.Size = new Size(161, 25);
             pBegin.TabIndex = 37;
             pBegin.KeyPress += DeleteSpace_KeyPress;
             pBegin.Validating += pBegin_Validating;
@@ -180,7 +180,7 @@
             timeBegin.ImeMode = ImeMode.NoControl;
             timeBegin.Location = new Point(78, 20);
             timeBegin.Name = "timeBegin";
-            timeBegin.Size = new Size(177, 25);
+            timeBegin.Size = new Size(160, 25);
             timeBegin.TabIndex = 14;
             timeBegin.Validating += timeBegin_Validating;
             // 
@@ -212,7 +212,7 @@
             name.Location = new Point(140, 85);
             name.Name = "name";
             name.PlaceholderText = "Наименование";
-            name.Size = new Size(160, 25);
+            name.Size = new Size(239, 25);
             name.TabIndex = 18;
             name.Validating += name_Validating;
             // 
@@ -220,11 +220,13 @@
             // 
             timeCount.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             timeCount.Location = new Point(77, 94);
-            timeCount.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            timeCount.Maximum = new decimal(new int[] { 35, 0, 0, 0 });
+            timeCount.Minimum = new decimal(new int[] { 2, 0, 0, 0 });
             timeCount.Name = "timeCount";
-            timeCount.Size = new Size(178, 25);
+            timeCount.Size = new Size(161, 25);
             timeCount.TabIndex = 29;
             timeCount.Value = new decimal(new int[] { 21, 0, 0, 0 });
+            timeCount.ValueChanged += timeCount_ValueChanged;
             // 
             // timeGroup
             // 
@@ -238,7 +240,7 @@
             timeGroup.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
             timeGroup.Location = new Point(3, 3);
             timeGroup.Name = "timeGroup";
-            timeGroup.Size = new Size(315, 145);
+            timeGroup.Size = new Size(298, 145);
             timeGroup.TabIndex = 32;
             timeGroup.TabStop = false;
             timeGroup.Text = "Время";
@@ -266,9 +268,9 @@
             genInfoGroup.Controls.Add(volume);
             genInfoGroup.Controls.Add(name);
             genInfoGroup.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            genInfoGroup.Location = new Point(645, 3);
+            genInfoGroup.Location = new Point(554, 3);
             genInfoGroup.Name = "genInfoGroup";
-            genInfoGroup.Size = new Size(316, 145);
+            genInfoGroup.Size = new Size(407, 145);
             genInfoGroup.TabIndex = 33;
             genInfoGroup.TabStop = false;
             genInfoGroup.Text = "Общая информация";
@@ -322,8 +324,8 @@
             specificWeight.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             specificWeight.Location = new Point(140, 114);
             specificWeight.Name = "specificWeight";
-            specificWeight.PlaceholderText = "Удельный вес";
-            specificWeight.Size = new Size(160, 25);
+            specificWeight.PlaceholderText = "Удельный вес(от 0 до 1500) кг/м3";
+            specificWeight.Size = new Size(239, 25);
             specificWeight.TabIndex = 35;
             specificWeight.KeyPress += DeleteSpace_KeyPress;
             specificWeight.Validating += specificWeight_Validating;
@@ -333,8 +335,8 @@
             volumeInjection.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             volumeInjection.Location = new Point(140, 55);
             volumeInjection.Name = "volumeInjection";
-            volumeInjection.PlaceholderText = "Объём закачки";
-            volumeInjection.Size = new Size(160, 25);
+            volumeInjection.PlaceholderText = "Объём закачки (от 0 до 100) л/сек";
+            volumeInjection.Size = new Size(239, 25);
             volumeInjection.TabIndex = 34;
             volumeInjection.KeyPress += DeleteSpace_KeyPress;
             volumeInjection.Validating += volumeInjection_Validating;
@@ -344,8 +346,8 @@
             volume.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             volume.Location = new Point(140, 26);
             volume.Name = "volume";
-            volume.PlaceholderText = "Объём";
-            volume.Size = new Size(160, 25);
+            volume.PlaceholderText = "Объём(от 0 до 100) м3";
+            volume.Size = new Size(239, 25);
             volume.TabIndex = 33;
             volume.KeyPress += DeleteSpace_KeyPress;
             volume.Validating += volume_Validating;
@@ -415,9 +417,9 @@
             // gridTopPanel
             // 
             gridTopPanel.ColumnCount = 3;
-            gridTopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            gridTopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            gridTopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            gridTopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 31.5478725F));
+            gridTopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25.669548F));
+            gridTopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 42.7825775F));
             gridTopPanel.Controls.Add(genInfoGroup, 2, 0);
             gridTopPanel.Controls.Add(timeGroup, 0, 0);
             gridTopPanel.Controls.Add(pGroup, 1, 0);
@@ -522,7 +524,6 @@
 
         #endregion
         private DateTimePicker timeEnd;
-        private Label label2;
         private GroupBox pGroup;
         private DateTimePicker timeBegin;
         private Label timeBeginLabel;
