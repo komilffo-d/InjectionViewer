@@ -1,11 +1,11 @@
 using LiveChartsCore;
-using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Padding = LiveChartsCore.Drawing.Padding;
 
 namespace InjectionViewer
 {
@@ -57,7 +57,7 @@ namespace InjectionViewer
         #region [Цвета для осей и графиков]
         protected SKColor _blueColor = new SKColor(25, 118, 210);
         protected SKColor _redColor = new SKColor(229, 57, 53);
-        protected SKColor _yellowColor = new SKColor(198, 167, 0);
+        protected SKColor _vinousColor = new SKColor(145, 0, 72);
         protected SKColor _greenColor = new SKColor(0, 171, 0);
         protected SKColor _blackColor = new SKColor(0, 0, 0);
         #endregion
@@ -139,8 +139,8 @@ namespace InjectionViewer
                     MinLimit=MIN_Y_AXIS,
                     MaxLimit=MAX_Y2_AXIS,
                     TextSize=10,
-                    Padding=new LiveChartsCore.Drawing.Padding(0),
-                    LabelsPaint = new SolidColorPaint(_yellowColor),
+                    Padding=new Padding(0),
+                    LabelsPaint = new SolidColorPaint(_vinousColor),
                     ShowSeparatorLines = false
                 },
                 new Axis
@@ -149,7 +149,7 @@ namespace InjectionViewer
                     MaxLimit=MAX_Y_AXIS,
                     LabelsPaint = new SolidColorPaint(_greenColor),
                     TextSize=8,
-                    Padding=new LiveChartsCore.Drawing.Padding(10,0),
+                    Padding=new Padding(10,0),
                     ShowSeparatorLines = true,
                     SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray)
                     {
@@ -162,7 +162,7 @@ namespace InjectionViewer
                     MinLimit=MIN_Y_AXIS,
                     MaxLimit=MAX_Y_AXIS,
                     TextSize=8,
-                    Padding=new LiveChartsCore.Drawing.Padding(10,0),
+                    Padding=new Padding(10,0),
                     LabelsPaint = new SolidColorPaint(_blueColor),
                     ShowSeparatorLines = false
                 },
@@ -171,7 +171,7 @@ namespace InjectionViewer
                     MinLimit=MIN_Y_AXIS,
                     MaxLimit=MAX_Y_AXIS,
                     TextSize=8,
-                    Padding=new LiveChartsCore.Drawing.Padding(10,0),
+                    Padding=new Padding(10,0),
                     LabelsPaint = new SolidColorPaint(_redColor),
                     ShowSeparatorLines = false
                 },
@@ -184,8 +184,6 @@ namespace InjectionViewer
                     },
                 };
             chart.Series = new List<ISeries>();
-            chart.LegendPosition = LegendPosition.Right;
-            chart.LegendTextSize = 16;
         }
 
         private List<string> GetInterimDates(DateTime startDate, DateTime endDate, int count)
@@ -302,13 +300,13 @@ namespace InjectionViewer
                             StrokeThickness = 2,
                             PathEffect = new DashEffect(new float[] { 3, 3 })
                         },
-                        Padding=new LiveChartsCore.Drawing.Padding(0,10),
+                        Padding=new Padding(0,10),
                     },
                 };
 
 
                 chart.Series = new ObservableCollection<ISeries>(){
-                    CreateSeries(specificWeightList,_yellowColor,0, "Pкг/м3"),
+                    CreateSeries(specificWeightList,_vinousColor,0, "Pкг/м3"),
 
                     CreateSeries(volumeList,_greenColor,1,"Qсум(м3)"),
 
