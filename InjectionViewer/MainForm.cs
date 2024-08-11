@@ -269,21 +269,6 @@ namespace InjectionViewer
             return interimDoubles;
         }
 
-        private IList<T> SetNewValueInMedium<T>(IList<T> values, T newValue) where T : struct
-        {
-            var length = values.Count();
-            if (length == 0)
-                throw new InvalidDataException("Коллекция должна иметь длину от 1 элемента.");
-            else if (length == 1)
-                values[0] = newValue;
-            else if (length % 2 == 0)
-                values[length / 2 - 1] = newValue;
-            else if (length % 2 == 1)
-                values[length / 2] = newValue;
-
-            return values;
-        }
-
         private ISeries CreateSeries(IEnumerable<double> data, SKColor color, int yAxis, string name = "")
         {
             return new LineSeries<double>
