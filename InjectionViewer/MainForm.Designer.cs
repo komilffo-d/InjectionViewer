@@ -46,9 +46,9 @@
             timeGroup = new GroupBox();
             timeCountLabel = new Label();
             genInfoGroup = new GroupBox();
-            label4 = new Label();
-            label3 = new Label();
-            label1 = new Label();
+            specificWeightLabel = new Label();
+            nameLabel = new Label();
+            volumeInjectionLabel = new Label();
             volumeLabel = new Label();
             specificWeight = new TextBox();
             volumeInjection = new TextBox();
@@ -56,9 +56,10 @@
             formMenu = new MenuStrip();
             formMenuChart = new ToolStripMenuItem();
             formMenuChartCreate = new ToolStripMenuItem();
-            formMenuChartSaveJpg = new ToolStripMenuItem();
-            formMenuChartSavePng = new ToolStripMenuItem();
-            formMenuChartSaveBmp = new ToolStripMenuItem();
+            formMenuChartSaveA3 = new ToolStripMenuItem();
+            formMenuChartSaveA4 = new ToolStripMenuItem();
+            formMenuChartSaveA5 = new ToolStripMenuItem();
+            formMenuChartSaveA6 = new ToolStripMenuItem();
             formMenuForm = new ToolStripMenuItem();
             formMenuFormDropState = new ToolStripMenuItem();
             gridTopPanel = new TableLayoutPanel();
@@ -218,7 +219,7 @@
             // 
             timeCount.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             timeCount.Location = new Point(77, 94);
-            timeCount.Maximum = new decimal(new int[] { 35, 0, 0, 0 });
+            timeCount.Maximum = new decimal(new int[] { 25, 0, 0, 0 });
             timeCount.Minimum = new decimal(new int[] { 2, 0, 0, 0 });
             timeCount.Name = "timeCount";
             timeCount.Size = new Size(161, 25);
@@ -257,9 +258,9 @@
             // genInfoGroup
             // 
             genInfoGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            genInfoGroup.Controls.Add(label4);
-            genInfoGroup.Controls.Add(label3);
-            genInfoGroup.Controls.Add(label1);
+            genInfoGroup.Controls.Add(specificWeightLabel);
+            genInfoGroup.Controls.Add(nameLabel);
+            genInfoGroup.Controls.Add(volumeInjectionLabel);
             genInfoGroup.Controls.Add(volumeLabel);
             genInfoGroup.Controls.Add(specificWeight);
             genInfoGroup.Controls.Add(volumeInjection);
@@ -273,38 +274,38 @@
             genInfoGroup.TabStop = false;
             genInfoGroup.Text = "Общая информация";
             // 
-            // label4
+            // specificWeightLabel
             // 
-            label4.AutoSize = true;
-            label4.CausesValidation = false;
-            label4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label4.Location = new Point(6, 114);
-            label4.Name = "label4";
-            label4.Size = new Size(113, 21);
-            label4.TabIndex = 39;
-            label4.Text = "Удельный вес";
+            specificWeightLabel.AutoSize = true;
+            specificWeightLabel.CausesValidation = false;
+            specificWeightLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            specificWeightLabel.Location = new Point(6, 114);
+            specificWeightLabel.Name = "specificWeightLabel";
+            specificWeightLabel.Size = new Size(113, 21);
+            specificWeightLabel.TabIndex = 39;
+            specificWeightLabel.Text = "Удельный вес";
             // 
-            // label3
+            // nameLabel
             // 
-            label3.AutoSize = true;
-            label3.CausesValidation = false;
-            label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label3.Location = new Point(6, 87);
-            label3.Name = "label3";
-            label3.Size = new Size(125, 21);
-            label3.TabIndex = 38;
-            label3.Text = "Наименование";
+            nameLabel.AutoSize = true;
+            nameLabel.CausesValidation = false;
+            nameLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            nameLabel.Location = new Point(6, 87);
+            nameLabel.Name = "nameLabel";
+            nameLabel.Size = new Size(125, 21);
+            nameLabel.TabIndex = 38;
+            nameLabel.Text = "Наименование";
             // 
-            // label1
+            // volumeInjectionLabel
             // 
-            label1.AutoSize = true;
-            label1.CausesValidation = false;
-            label1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label1.Location = new Point(6, 59);
-            label1.Name = "label1";
-            label1.Size = new Size(124, 21);
-            label1.TabIndex = 37;
-            label1.Text = "Объём закачки";
+            volumeInjectionLabel.AutoSize = true;
+            volumeInjectionLabel.CausesValidation = false;
+            volumeInjectionLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            volumeInjectionLabel.Location = new Point(6, 59);
+            volumeInjectionLabel.Name = "volumeInjectionLabel";
+            volumeInjectionLabel.Size = new Size(124, 21);
+            volumeInjectionLabel.TabIndex = 37;
+            volumeInjectionLabel.Text = "Объём закачки";
             // 
             // volumeLabel
             // 
@@ -361,7 +362,7 @@
             // 
             // formMenuChart
             // 
-            formMenuChart.DropDownItems.AddRange(new ToolStripItem[] { formMenuChartCreate, formMenuChartSaveJpg, formMenuChartSavePng, formMenuChartSaveBmp });
+            formMenuChart.DropDownItems.AddRange(new ToolStripItem[] { formMenuChartCreate, formMenuChartSaveA3, formMenuChartSaveA4, formMenuChartSaveA5, formMenuChartSaveA6 });
             formMenuChart.Name = "formMenuChart";
             formMenuChart.Size = new Size(60, 20);
             formMenuChart.Text = "График";
@@ -369,33 +370,41 @@
             // formMenuChartCreate
             // 
             formMenuChartCreate.Name = "formMenuChartCreate";
-            formMenuChartCreate.Size = new Size(215, 22);
+            formMenuChartCreate.Size = new Size(201, 22);
             formMenuChartCreate.Text = "Создать график";
             formMenuChartCreate.Click += formMenuChartCreate_Click;
             // 
-            // formMenuChartSaveJpg
+            // formMenuChartSaveA3
             // 
-            formMenuChartSaveJpg.Enabled = false;
-            formMenuChartSaveJpg.Name = "formMenuChartSaveJpg";
-            formMenuChartSaveJpg.Size = new Size(215, 22);
-            formMenuChartSaveJpg.Text = "Сохранить график (.jpg)";
-            formMenuChartSaveJpg.Click += formMenuChartSaveJpg_Click;
+            formMenuChartSaveA3.Enabled = false;
+            formMenuChartSaveA3.Name = "formMenuChartSaveA3";
+            formMenuChartSaveA3.Size = new Size(201, 22);
+            formMenuChartSaveA3.Text = "Сохранить график (A3)";
+            formMenuChartSaveA3.Click += formMenuChartSaveA3_Click;
             // 
-            // formMenuChartSavePng
+            // formMenuChartSaveA4
             // 
-            formMenuChartSavePng.Enabled = false;
-            formMenuChartSavePng.Name = "formMenuChartSavePng";
-            formMenuChartSavePng.Size = new Size(215, 22);
-            formMenuChartSavePng.Text = "Сохранить график (.png)";
-            formMenuChartSavePng.Click += formMenuChartSavePng_Click;
+            formMenuChartSaveA4.Enabled = false;
+            formMenuChartSaveA4.Name = "formMenuChartSaveA4";
+            formMenuChartSaveA4.Size = new Size(201, 22);
+            formMenuChartSaveA4.Text = "Сохранить график (A4)";
+            formMenuChartSaveA4.Click += formMenuChartSaveA4_Click;
             // 
-            // formMenuChartSaveBmp
+            // formMenuChartSaveA5
             // 
-            formMenuChartSaveBmp.Enabled = false;
-            formMenuChartSaveBmp.Name = "formMenuChartSaveBmp";
-            formMenuChartSaveBmp.Size = new Size(215, 22);
-            formMenuChartSaveBmp.Text = "Сохранить график (.bmp)";
-            formMenuChartSaveBmp.Click += formMenuChartSaveBmp_Click;
+            formMenuChartSaveA5.Enabled = false;
+            formMenuChartSaveA5.Name = "formMenuChartSaveA5";
+            formMenuChartSaveA5.Size = new Size(201, 22);
+            formMenuChartSaveA5.Text = "Сохранить график (A5)";
+            formMenuChartSaveA5.Click += formMenuChartSaveA5_Click;
+            // 
+            // formMenuChartSaveA6
+            // 
+            formMenuChartSaveA6.Enabled = false;
+            formMenuChartSaveA6.Name = "formMenuChartSaveA6";
+            formMenuChartSaveA6.Size = new Size(201, 22);
+            formMenuChartSaveA6.Text = "Сохранить график (A6)";
+            formMenuChartSaveA6.Click += formMenuChartSaveA6_Click;
             // 
             // formMenuForm
             // 
@@ -536,9 +545,9 @@
         private MenuStrip formMenu;
         private ToolStripMenuItem formMenuChart;
         private ToolStripMenuItem formMenuChartCreate;
-        private ToolStripMenuItem formMenuChartSaveJpg;
-        private ToolStripMenuItem formMenuChartSavePng;
-        private ToolStripMenuItem formMenuChartSaveBmp;
+        private ToolStripMenuItem formMenuChartSaveA4;
+        private ToolStripMenuItem formMenuChartSaveA5;
+        private ToolStripMenuItem formMenuChartSaveA6;
         private ToolStripMenuItem formMenuForm;
         private ToolStripMenuItem formMenuFormDropState;
         private TableLayoutPanel gridTopPanel;
@@ -555,11 +564,12 @@
         private TextBox pBegin;
         private Label pEndLabel;
         private Label pBeginLabel;
-        private Label label4;
-        private Label label3;
-        private Label label1;
+        private Label specificWeightLabel;
+        private Label nameLabel;
+        private Label volumeInjectionLabel;
         private Label volumeLabel;
         private GroupBox seriesGroup;
         private ComboBox typeSeriesSelect;
+        private ToolStripMenuItem formMenuChartSaveA3;
     }
 }

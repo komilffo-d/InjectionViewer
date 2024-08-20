@@ -6,6 +6,8 @@ using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing.Drawing2D;
 using Padding = LiveChartsCore.Drawing.Padding;
 
 namespace InjectionViewer
@@ -79,27 +81,30 @@ namespace InjectionViewer
             CREATEDGRAPH
         }
 
-        protected enum FormatFile : sbyte
+        protected enum FormatPaper : sbyte
         {
-            JPG,
-            PNG,
-            BMP
+            A3,
+            A4,
+            A5,
+            A6
         }
 
         private void ActiveFormControlPossibility()
         {
-            formMenuChartSaveJpg.Enabled = true;
-            formMenuChartSavePng.Enabled = true;
-            formMenuChartSaveBmp.Enabled = true;
+            formMenuChartSaveA3.Enabled = true;
+            formMenuChartSaveA4.Enabled = true;
+            formMenuChartSaveA5.Enabled = true;
+            formMenuChartSaveA6.Enabled = true;
             formMenuFormDropState.Enabled = true;
             typeSeriesSelect.Enabled = true;
         }
 
         private void DisActiveFormControlPossibility()
         {
-            formMenuChartSaveJpg.Enabled = false;
-            formMenuChartSavePng.Enabled = false;
-            formMenuChartSaveBmp.Enabled = false;
+            formMenuChartSaveA3.Enabled = false;
+            formMenuChartSaveA4.Enabled = false;
+            formMenuChartSaveA5.Enabled = false;
+            formMenuChartSaveA6.Enabled = false;
             formMenuFormDropState.Enabled = false;
             typeSeriesSelect.Enabled = false;
         }
@@ -162,8 +167,8 @@ namespace InjectionViewer
                 {
                     MinLimit=MIN_Y_AXIS,
                     MaxLimit=MAX_Y2_AXIS,
-                    TextSize=10,
-                    Padding=new Padding(0),
+                    TextSize=14,
+                    Padding=new Padding(10,0),
                     LabelsPaint = new SolidColorPaint(_vinousColor),
                     ShowSeparatorLines = false
                 },
@@ -172,7 +177,7 @@ namespace InjectionViewer
                     MinLimit=MIN_Y_AXIS,
                     MaxLimit=MAX_Y_AXIS,
                     LabelsPaint = new SolidColorPaint(_greenColor),
-                    TextSize=8,
+                    TextSize=14,
                     Padding=new Padding(10,0),
                     ShowSeparatorLines = true,
                     SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray)
@@ -185,7 +190,7 @@ namespace InjectionViewer
                 {
                     MinLimit=MIN_Y_AXIS,
                     MaxLimit=MAX_Y_AXIS,
-                    TextSize=8,
+                    TextSize=14,
                     Padding=new Padding(10,0),
                     LabelsPaint = new SolidColorPaint(_blueColor),
                     ShowSeparatorLines = false
@@ -194,7 +199,7 @@ namespace InjectionViewer
                 {
                     MinLimit=MIN_Y_AXIS,
                     MaxLimit=MAX_Y_AXIS,
-                    TextSize=8,
+                    TextSize=14,
                     Padding=new Padding(10,0),
                     LabelsPaint = new SolidColorPaint(_redColor),
                     ShowSeparatorLines = false
@@ -327,7 +332,7 @@ namespace InjectionViewer
                 {
                     new Axis
                     {
-                        TextSize=10,
+                        TextSize=16,
                         Labels=timeList,
                         MinLimit=MIN_X_AXIS,
                         MaxLimit=timeCountVar - 1,
@@ -357,30 +362,30 @@ namespace InjectionViewer
             }
         }
 
-        private void SaveScreenshootControl(Control control, FormatFile formatFile)
+        private void SaveScreenshootControl(Control control, FormatPaper formatPaper)
         {
             Bitmap bmp = new Bitmap(control.Width, control.Height);
             control.DrawToBitmap(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
+            Size size = new Size(bmp.Width, bmp.Height);
 
-            var format = string.Empty;
-            switch (formatFile)
+            switch (formatPaper)
             {
-                case FormatFile.JPG:
-                    format = "JPG|*.jpg";
+                case FormatPaper.A3:
+                    size = new Size(4961, 3508);
                     break;
-                case FormatFile.PNG:
-                    format = "PNG|*.png";
+                case FormatPaper.A4:
+                    size = new Size(3508, 2480);
                     break;
-                case FormatFile.BMP:
-                    format = "BMP|*.bmp";
+                case FormatPaper.A5:
+                    size = new Size(2480, 1748);
                     break;
-                default:
-                    format = "BIN|*.bin";
+                case FormatPaper.A6:
+                    size = new Size(1748, 1240);
                     break;
             }
-
+            bmp = ResizeBitmap(bmp, size);
             SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = format;
+            dialog.Filter = "JPG|*.jpg|PNG|*.png|BMP|*.bmp";
             dialog.Title = "Сохранить график";
             dialog.ShowDialog();
             if (dialog.FileName != string.Empty)
@@ -391,11 +396,33 @@ namespace InjectionViewer
 
         }
 
-        private void formMenuChartSaveJpg_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup, FormatFile.JPG);
+        private protected static Bitmap ResizeBitmap(Bitmap bitmap, Size size)
+        {
+            try
+            {
+                Bitmap bitmapTemp = new Bitmap(size.Width, size.Height);
+                using (Graphics g = Graphics.FromImage(bitmapTemp))
+                {
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.DrawImage(bitmap, 0, 0, size.Width, size.Height);
+                }
+                return bitmapTemp;
+            }
+            catch
+            {
+                Trace.WriteLine("Размер Bitmap не может быть изменён.");
+                return bitmap;
+            }
+        }
 
-        private void formMenuChartSavePng_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup, FormatFile.PNG);
 
-        private void formMenuChartSaveBmp_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup, FormatFile.BMP);
+        private void formMenuChartSaveA3_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup, FormatPaper.A3);
+
+        private void formMenuChartSaveA4_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup, FormatPaper.A4);
+
+        private void formMenuChartSaveA5_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup, FormatPaper.A5);
+
+        private void formMenuChartSaveA6_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup, FormatPaper.A6);
 
         private void formMenuFormDropState_Click(object sender, EventArgs e) => SetState(StateForm.PREPAIRED);
 
