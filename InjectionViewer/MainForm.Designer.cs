@@ -56,10 +56,7 @@
             formMenu = new MenuStrip();
             formMenuChart = new ToolStripMenuItem();
             formMenuChartCreate = new ToolStripMenuItem();
-            formMenuChartSaveA3 = new ToolStripMenuItem();
             formMenuChartSaveA4 = new ToolStripMenuItem();
-            formMenuChartSaveA5 = new ToolStripMenuItem();
-            formMenuChartSaveA6 = new ToolStripMenuItem();
             formMenuForm = new ToolStripMenuItem();
             formMenuFormDropState = new ToolStripMenuItem();
             gridTopPanel = new TableLayoutPanel();
@@ -362,7 +359,7 @@
             // 
             // formMenuChart
             // 
-            formMenuChart.DropDownItems.AddRange(new ToolStripItem[] { formMenuChartCreate, formMenuChartSaveA3, formMenuChartSaveA4, formMenuChartSaveA5, formMenuChartSaveA6 });
+            formMenuChart.DropDownItems.AddRange(new ToolStripItem[] { formMenuChartCreate, formMenuChartSaveA4 });
             formMenuChart.Name = "formMenuChart";
             formMenuChart.Size = new Size(60, 20);
             formMenuChart.Text = "График";
@@ -374,14 +371,6 @@
             formMenuChartCreate.Text = "Создать график";
             formMenuChartCreate.Click += formMenuChartCreate_Click;
             // 
-            // formMenuChartSaveA3
-            // 
-            formMenuChartSaveA3.Enabled = false;
-            formMenuChartSaveA3.Name = "formMenuChartSaveA3";
-            formMenuChartSaveA3.Size = new Size(201, 22);
-            formMenuChartSaveA3.Text = "Сохранить график (A3)";
-            formMenuChartSaveA3.Click += formMenuChartSaveA3_Click;
-            // 
             // formMenuChartSaveA4
             // 
             formMenuChartSaveA4.Enabled = false;
@@ -389,22 +378,6 @@
             formMenuChartSaveA4.Size = new Size(201, 22);
             formMenuChartSaveA4.Text = "Сохранить график (A4)";
             formMenuChartSaveA4.Click += formMenuChartSaveA4_Click;
-            // 
-            // formMenuChartSaveA5
-            // 
-            formMenuChartSaveA5.Enabled = false;
-            formMenuChartSaveA5.Name = "formMenuChartSaveA5";
-            formMenuChartSaveA5.Size = new Size(201, 22);
-            formMenuChartSaveA5.Text = "Сохранить график (A5)";
-            formMenuChartSaveA5.Click += formMenuChartSaveA5_Click;
-            // 
-            // formMenuChartSaveA6
-            // 
-            formMenuChartSaveA6.Enabled = false;
-            formMenuChartSaveA6.Name = "formMenuChartSaveA6";
-            formMenuChartSaveA6.Size = new Size(201, 22);
-            formMenuChartSaveA6.Text = "Сохранить график (A6)";
-            formMenuChartSaveA6.Click += formMenuChartSaveA6_Click;
             // 
             // formMenuForm
             // 
@@ -546,8 +519,6 @@
         private ToolStripMenuItem formMenuChart;
         private ToolStripMenuItem formMenuChartCreate;
         private ToolStripMenuItem formMenuChartSaveA4;
-        private ToolStripMenuItem formMenuChartSaveA5;
-        private ToolStripMenuItem formMenuChartSaveA6;
         private ToolStripMenuItem formMenuForm;
         private ToolStripMenuItem formMenuFormDropState;
         private TableLayoutPanel gridTopPanel;
@@ -570,6 +541,5 @@
         private Label volumeLabel;
         private GroupBox seriesGroup;
         private ComboBox typeSeriesSelect;
-        private ToolStripMenuItem formMenuChartSaveA3;
     }
 }

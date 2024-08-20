@@ -81,30 +81,16 @@ namespace InjectionViewer
             CREATEDGRAPH
         }
 
-        protected enum FormatPaper : sbyte
-        {
-            A3,
-            A4,
-            A5,
-            A6
-        }
-
         private void ActiveFormControlPossibility()
         {
-            formMenuChartSaveA3.Enabled = true;
             formMenuChartSaveA4.Enabled = true;
-            formMenuChartSaveA5.Enabled = true;
-            formMenuChartSaveA6.Enabled = true;
             formMenuFormDropState.Enabled = true;
             typeSeriesSelect.Enabled = true;
         }
 
         private void DisActiveFormControlPossibility()
         {
-            formMenuChartSaveA3.Enabled = false;
             formMenuChartSaveA4.Enabled = false;
-            formMenuChartSaveA5.Enabled = false;
-            formMenuChartSaveA6.Enabled = false;
             formMenuFormDropState.Enabled = false;
             typeSeriesSelect.Enabled = false;
         }
@@ -362,28 +348,14 @@ namespace InjectionViewer
             }
         }
 
-        private void SaveScreenshootControl(Control control, FormatPaper formatPaper)
+        private void SaveScreenshootControl(Control control)
         {
             Bitmap bmp = new Bitmap(control.Width, control.Height);
             control.DrawToBitmap(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
-            Size size = new Size(bmp.Width, bmp.Height);
-
-            switch (formatPaper)
-            {
-                case FormatPaper.A3:
-                    size = new Size(4961, 3508);
-                    break;
-                case FormatPaper.A4:
-                    size = new Size(3508, 2480);
-                    break;
-                case FormatPaper.A5:
-                    size = new Size(2480, 1748);
-                    break;
-                case FormatPaper.A6:
-                    size = new Size(1748, 1240);
-                    break;
-            }
+            Size size = new Size(3508, 2480);
             bmp = ResizeBitmap(bmp, size);
+
+
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "JPG|*.jpg|PNG|*.png|BMP|*.bmp";
             dialog.Title = "Сохранить график";
@@ -415,14 +387,7 @@ namespace InjectionViewer
             }
         }
 
-
-        private void formMenuChartSaveA3_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup, FormatPaper.A3);
-
-        private void formMenuChartSaveA4_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup, FormatPaper.A4);
-
-        private void formMenuChartSaveA5_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup, FormatPaper.A5);
-
-        private void formMenuChartSaveA6_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup, FormatPaper.A6);
+        private void formMenuChartSaveA4_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup);
 
         private void formMenuFormDropState_Click(object sender, EventArgs e) => SetState(StateForm.PREPAIRED);
 
