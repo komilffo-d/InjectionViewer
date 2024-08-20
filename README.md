@@ -9,8 +9,8 @@ This software allows you to plot a graph with multiple Y-axes that characterize 
 ## Features
 - The program has two states - PREPARED(Preparation for construction) and CREATEGRAPH (Built a graph from the entered values).
 - Validation of the entered values. Complete inability to enter invalid data.
-- Selecting the number of segments to plot (From 2 to 35).
-- Export graphics in 3 file formats - jpg, png, bmp.
+- Selecting the number of segments to plot (From 2 to 25).
+- Export graphics in 4 paper formats - A3, A4, A5, A6 (JPG, PNG, BMP).
 - Resetting the program status to PREPAIRED (Clearing all input fields, deleting the plotted graph, prohibiting export actions)
 - THE MAIN: Modification of the constructed series through manual sculpting.
 
@@ -31,7 +31,7 @@ Base size form
 Extended form size
 </p>
 
-![image](https://github.com/user-attachments/assets/0a7b2af1-9e15-4320-b2e1-38a5b8716ecd)
+![image](https://github.com/user-attachments/assets/bb3de299-b8f7-4e3a-8e42-c29fbce8f700)
 <p align="center">
 The menu is in the PREPAID state
 </p>
@@ -47,7 +47,7 @@ Validation Error
 The constructed graph based on the entered values
 </p>
 
-![image](https://github.com/user-attachments/assets/bd95111f-f6dc-4966-a165-e30b1b12ba84)
+![image](https://github.com/user-attachments/assets/efee10b1-cbdd-46ad-be85-edf6ffaecbb9)
 <p align="center">
 The menu is in the CREATEGRAPH state
 </p>
