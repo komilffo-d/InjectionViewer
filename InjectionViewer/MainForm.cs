@@ -81,8 +81,15 @@ namespace InjectionViewer
             CREATEDGRAPH
         }
 
+        protected enum FormatPaper : sbyte
+        {
+            Native = 0,
+            A4,
+        }
+
         private void ActiveFormControlPossibility()
         {
+            formMenuChartSaveNative.Enabled = true;
             formMenuChartSaveA4.Enabled = true;
             formMenuFormDropState.Enabled = true;
             typeSeriesSelect.Enabled = true;
@@ -90,6 +97,7 @@ namespace InjectionViewer
 
         private void DisActiveFormControlPossibility()
         {
+            formMenuChartSaveNative.Enabled = false;
             formMenuChartSaveA4.Enabled = false;
             formMenuFormDropState.Enabled = false;
             typeSeriesSelect.Enabled = false;
@@ -348,11 +356,18 @@ namespace InjectionViewer
             }
         }
 
-        private void SaveScreenshootControl(Control control)
+        private void SaveScreenshootControl(Control control, FormatPaper formatPaper)
         {
             Bitmap bmp = new Bitmap(control.Width, control.Height);
-            control.DrawToBitmap(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
-            Size size = new Size(3508, 2480);
+            Size size = new Size(bmp.Width, bmp.Height);
+            control.DrawToBitmap(bmp, new Rectangle(new Point(0, 0), size));
+
+            switch (formatPaper)
+            {
+                case FormatPaper.A4:
+                    size = new Size(3508, 2480);
+                    break;
+            }
             bmp = ResizeBitmap(bmp, size);
 
 
@@ -387,7 +402,9 @@ namespace InjectionViewer
             }
         }
 
-        private void formMenuChartSaveA4_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup);
+        private void formMenuChartSaveNative_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup, FormatPaper.Native);
+
+        private void formMenuChartSaveA4_Click(object sender, EventArgs e) => SaveScreenshootControl(chartGroup, FormatPaper.A4);
 
         private void formMenuFormDropState_Click(object sender, EventArgs e) => SetState(StateForm.PREPAIRED);
 

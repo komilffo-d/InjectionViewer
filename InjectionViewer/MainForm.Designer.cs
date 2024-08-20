@@ -66,6 +66,7 @@
             chart = new LiveChartsCore.SkiaSharpView.WinForms.CartesianChart();
             chartGroup = new Panel();
             validateProvider = new ErrorProvider(components);
+            formMenuChartSaveNative = new ToolStripMenuItem();
             pGroup.SuspendLayout();
             seriesGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)timeCount).BeginInit();
@@ -359,7 +360,7 @@
             // 
             // formMenuChart
             // 
-            formMenuChart.DropDownItems.AddRange(new ToolStripItem[] { formMenuChartCreate, formMenuChartSaveA4 });
+            formMenuChart.DropDownItems.AddRange(new ToolStripItem[] { formMenuChartCreate, formMenuChartSaveNative, formMenuChartSaveA4 });
             formMenuChart.Name = "formMenuChart";
             formMenuChart.Size = new Size(60, 20);
             formMenuChart.Text = "График";
@@ -367,7 +368,7 @@
             // formMenuChartCreate
             // 
             formMenuChartCreate.Name = "formMenuChartCreate";
-            formMenuChartCreate.Size = new Size(201, 22);
+            formMenuChartCreate.Size = new Size(221, 22);
             formMenuChartCreate.Text = "Создать график";
             formMenuChartCreate.Click += formMenuChartCreate_Click;
             // 
@@ -375,7 +376,7 @@
             // 
             formMenuChartSaveA4.Enabled = false;
             formMenuChartSaveA4.Name = "formMenuChartSaveA4";
-            formMenuChartSaveA4.Size = new Size(201, 22);
+            formMenuChartSaveA4.Size = new Size(221, 22);
             formMenuChartSaveA4.Text = "Сохранить график (A4)";
             formMenuChartSaveA4.Click += formMenuChartSaveA4_Click;
             // 
@@ -472,6 +473,14 @@
             validateProvider.BlinkStyle = ErrorBlinkStyle.NeverBlink;
             validateProvider.ContainerControl = this;
             // 
+            // formMenuChartSaveNative
+            // 
+            formMenuChartSaveNative.Enabled = false;
+            formMenuChartSaveNative.Name = "formMenuChartSaveNative";
+            formMenuChartSaveNative.Size = new Size(221, 22);
+            formMenuChartSaveNative.Text = "Сохранить график (Native)";
+            formMenuChartSaveNative.Click += formMenuChartSaveNative_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -541,5 +550,6 @@
         private Label volumeLabel;
         private GroupBox seriesGroup;
         private ComboBox typeSeriesSelect;
+        private ToolStripMenuItem formMenuChartSaveNative;
     }
 }
